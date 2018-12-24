@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body>
+<form>
+    用户名： <input name="username" type="text" id="userName" placeholder="用户名" /><br>
+    密码： <input name="password" type="password" id="password" placeholder="密码"/><br>
+    确认密码：<input name="password" type="password" id="password2" placeholder="确认密码"/><br>
+    邮箱：<input name="E-mail" type="email" id="e-mail" placeholder="E-mail"/><br>
+    手机号：<input name="phoneNumber" type="text" id="phoneNumber" placeholder="手机号"/><br>
+
+    <input id="login" type="button" class="loginbtn" onclick="resign()" value="注册"/>
+</form>
+
+</body>
+<script type="text/javascript">
+    var request= new XMLHttpRequest();
+
+    function resign() {
+        var userName = document.getElementById("userName").value;
+        var password = document.getElementById("password").value;
+        var password2 = document.getElementById("password2").value;
+        var email = document.getElementById("e-mail").value;
+        var phoneNumber = document.getElementById("phoneNumber").value;
+        if (userName == null || userName == "" || password == null || password == "") {
+            alert("请输入用户名或密码");
+            return false;
+        }
+
+        if (password2 == null || password2 == "") {
+            alert("请确认密码");
+            return false;
+        }
+
+        if (password != password2) {
+            alert("第一次和第二次密码输入不一致")
+            return false;
+        }
+
+        if (email == null || email == "") {
+            alert("请输入邮箱");
+            return false;
+        }
+
+        if (phoneNumber == null || phoneNumber == ""){
+            alert("请输入手机号");
+            return false
+        }
+        var url="/resign"
+        var requestData = JSON.stringify({username:userName,password:password,email:email,phoneNumber:phoneNumber});
+
+
+        request.open('POST',url,true);
+        request.setRequestHeader('Content-Type','application/json');
+
+        request.send(requestData);
+        request.onreadystatechange=handleResult;
+    }
+
+    function handleResult(){
+        if(request.readyState==4 && request.status==200){
+            var response = request.responseText;
+            var json = JSON.parse(response)
+            if(json.login==1)
+                window.location.href="/user/${login.userName}";
+            else if(json.login==0)
+                alert("未知错误？？？？");
+            return false;
+        }
+    }
+
+
+</script>
+</html>
