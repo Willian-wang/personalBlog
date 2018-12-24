@@ -1,6 +1,5 @@
 package com.heiyu.blog.service;
 
-import com.heiyu.blog.domain.LoginUser;
 import com.heiyu.blog.domain.User;
 import com.heiyu.blog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public boolean isLoginMatch(LoginUser loginUser){
-        return userRepository.LoginUserMatch(loginUser.getUsername(),loginUser.getPassword())>0;
+    public boolean isLoginMatch(User user){
+        return userRepository.LoginUserMatch(user.getUsername(),user.getPassword())>0;
     }
 
     public void resignUser(User user){

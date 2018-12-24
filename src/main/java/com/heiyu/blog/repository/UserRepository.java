@@ -2,14 +2,11 @@ package com.heiyu.blog.repository;
 
 
 import com.heiyu.blog.domain.User;
-import com.mysql.cj.result.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import com.heiyu.blog.domain.LoginUser;
 
-import javax.validation.constraints.Email;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

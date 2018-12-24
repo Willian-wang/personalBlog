@@ -6,14 +6,33 @@ import jdk.nashorn.internal.objects.annotations.Setter;
 import javax.validation.constraints.Email;
 import java.util.Date;
 
-public class User extends LoginUser {
+public class User  {
 
+    private String username;
+    private String password;
     private String email;
     private String phoneNumber;
     private String lastIp;
     private Date lastLoginTime;
     private Date creatTime;
     private Date updatTime;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 
     public String getEmail() {
         return email;
@@ -65,15 +84,11 @@ public class User extends LoginUser {
 
     public User(){}
 
-    User(String username, String password) {
-        super(username, password);
-    }
-
     @Override
     public String toString() {
         return "User{" +
-                "userName='"+getUsername()+'\''+
-                ", password='"+getPassword()+'\''+
+                "userName='"+username+'\''+
+                ", password='"+password+'\''+
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", lastIp='" + lastIp + '\'' +
@@ -83,9 +98,24 @@ public class User extends LoginUser {
                 '}';
     }
 
-/**TODO 重写hash和equal方法
- *
- */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return new org.apache.commons.lang.builder.EqualsBuilder()
+                .append(username, user.username)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new org.apache.commons.lang.builder.HashCodeBuilder(17, 37)
+                .append(username)
+                .toHashCode();
+    }
 
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import com.heiyu.blog.domain.LoginUser;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,9 +30,9 @@ public class MainController {
 
     @RequestMapping(value = "/login",method = POST)
     @ResponseBody
-    public String loginPost(@RequestBody LoginUser loginUser) {
-        System.out.println(loginUser.toString());
-        if (userService.isLoginMatch(loginUser)) {
+    public String loginPost(@RequestBody User user) {
+        System.out.println(user.toString());
+        if (userService.isLoginMatch(user)) {
             return "{\"login\":1}";
         } else {
             return "{\"login\":0}";
