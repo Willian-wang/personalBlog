@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import com.heiyu.blog.repository.PublicRepository;
 
 /**
  * @author Jayfeather
@@ -18,13 +19,11 @@ import java.sql.SQLException;
 @Repository
 public class UserRepository {
 
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
+    private PublicRepository publicRepository;
 
 
     public int LoginUserMatch (String username,String password){
@@ -32,19 +31,36 @@ public class UserRepository {
         return (int)jdbcTemplate.queryForObject(sql,new Object[]{username,password}, Integer.class);
     }
 
-    public void UserWrite(User user){
-        String sql=("INSERT INTO user_admin VALUE(?,?,?,?,?,?,?,?)");
-        jdbcTemplate.update(sql,new Object[]{
-                user.getUsername(),
-                user.getPassword(),
-                user.getCreatTime(),
-                user.getUpdatTime(),
-                user.getEmail(),
-                user.getPhoneNumber(),
-                user.getLastIp(),
-                user.getLastLoginTime()
-        });
+    public void UserUpdate(User user){
+        String sql=("UPDATE user_admin SET admin_last_ip=?,admin_last_time=?,admin_gmt_update=? WHERE admin_name=?");
+            jdbcTemplate.update(sql, new Object[]{
+                    user.getLastIp(),
+                    user.getLastLoginTime(),
+                    user.getUpdatTime(),
+                    user.getUsername()
+            });
+        }
 
+    public Boolean UserWrite(User user) {
+        String sql = ("INSERT INTO user_admin() VALUE(?,?,?,?,?,?,?,?,?)");
+        int id = publicRepository.getMaxID("user_admin","admin_id")+1;
+        try {
+            jdbcTemplate.update(sql, new Object[]{
+                    id,
+                    user.getUsername(),
+                    user.getPassword(),
+                    user.getCreatTime(),
+                    user.getUpdatTime(),
+                    user.getEmail(),
+                    user.getPhoneNumber(),
+                    user.getLastIp(),
+                    user.getLastLoginTime()
+            });
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
     }
 
     public User UserRead(String username){

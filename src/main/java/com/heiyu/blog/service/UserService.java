@@ -2,10 +2,16 @@ package com.heiyu.blog.service;
 
 import com.heiyu.blog.domain.User;
 import com.heiyu.blog.repository.UserRepository;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 
+/**
+ * @author Jayfeather
+ *
+ */
 @Service
 public class UserService {
 
@@ -17,15 +23,28 @@ public class UserService {
     }
 
     public boolean isLoginMatch(User user){
-        return userRepository.LoginUserMatch(user.getUsername(),user.getPassword())>0;
+        int count;
+        Date date =new Date();
+        count = userRepository.LoginUserMatch(user.getUsername(),user.getPassword());
+        if(count>0) {
+            user.setUpdatTime(date);
+            user.setLastLoginTime(date);
+            userRepository.UserUpdate(user);
+            return true;
+        }
+        else return false;
     }
 
-    public void resignUser(User user){
 
 
-        userRepository.UserWrite(user);
+    public boolean resignUser(User user){
+        Date date =new Date();
+        user.setUpdatTime(date);
+        user.setCreatTime(date);
+        user.setLastLoginTime(date);
+        System.out.println(user);
+        return userRepository.UserWrite(user);
     }
-    /**  TODO 注册功能对象User的字段补全，并且写入数据库
-     *
-     */
+
+
 }

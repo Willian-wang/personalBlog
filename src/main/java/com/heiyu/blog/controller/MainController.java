@@ -31,7 +31,10 @@ public class MainController {
     @RequestMapping(value = "/login",method = POST)
     @ResponseBody
     public String loginPost(@RequestBody User user) {
-        System.out.println(user.toString());
+        //System.out.println(user.toString());
+        //System.out.println( request.getHeader("x-forwarded-for"));
+
+        user.setLastIp(getIP());
         if (userService.isLoginMatch(user)) {
             return "{\"login\":1}";
         } else {
@@ -45,10 +48,22 @@ public class MainController {
     @RequestMapping(value = "/resign",method = POST)
     @ResponseBody
     public String resignPost(@RequestBody User user){
-        request.getHeader("x-forwarded-for");
-        System.out.println(user.toString());
-        System.out.println( request.getHeader("x-forwarded-for"));
+        user.setLastIp(getIP());
 
-        return "{\"login\":1}";
+        if (userService.resignUser(user)) {
+            return "{\"login\":1}";
+        } else {
+            return "{\"login\":0}";
+        }
+    }
+
+
+    public String getIP(){
+        if (request.getHeader("x-forwarded-for") == null) {
+            return request.getRemoteAddr();
+        }
+        return request.getHeader("x-forwarded-for");
     }
 }
+
+
