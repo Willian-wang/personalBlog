@@ -15,12 +15,8 @@ import java.util.Date;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
-
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     public boolean isLoginMatch(User user){
         int count;

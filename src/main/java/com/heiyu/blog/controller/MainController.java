@@ -57,6 +57,8 @@ public class MainController {
         }
     }
 
+    @R
+
 
     public String getIP(){
         if (request.getHeader("x-forwarded-for") == null) {
