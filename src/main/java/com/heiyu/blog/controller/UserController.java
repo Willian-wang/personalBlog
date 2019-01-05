@@ -10,6 +10,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RestController
 public class UserController {
 
+
+
     @RequestMapping(value = "/passagelist",method = GET)
     public String getPassageList(@RequestBody int page,String _class){
         return  service.getPassageList(page,_class);
@@ -24,6 +26,7 @@ public class UserController {
     public String getComment(@PathVariable("id") Integer id){
         return service.getComment();
     }
+
     @RequestMapping(value = "/passage/{id}/comment",method = POST)
     public String postComment(@PathVariable("id") Integer id, Comment comment){
         return ;

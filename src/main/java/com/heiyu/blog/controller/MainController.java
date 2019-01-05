@@ -57,7 +57,7 @@ public class MainController {
         }
     }
 
-    @R
+
 
 
     public String getIP(){

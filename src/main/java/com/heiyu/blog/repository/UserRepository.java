@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import com.heiyu.blog.repository.PublicRepository;
 
 /**
  * @author Jayfeather
@@ -26,12 +25,12 @@ public class UserRepository {
     private PublicRepository publicRepository;
 
 
-    public int LoginUserMatch (String username,String password){
+    public int loginUserMatch(String username, String password){
         String sql=("SELECT COUNT(*) FROM user_admin WHERE admin_name=? and admin_password=?;");
         return (int)jdbcTemplate.queryForObject(sql,new Object[]{username,password}, Integer.class);
     }
 
-    public void UserUpdate(User user){
+    public void userUpdate(User user){
         String sql=("UPDATE user_admin SET admin_last_ip=?,admin_last_time=?,admin_gmt_update=? WHERE admin_name=?");
             jdbcTemplate.update(sql, new Object[]{
                     user.getLastIp(),
@@ -41,7 +40,7 @@ public class UserRepository {
             });
         }
 
-    public Boolean UserWrite(User user) {
+    public Boolean userWrite(User user) {
         String sql = ("INSERT INTO user_admin() VALUE(?,?,?,?,?,?,?,?,?)");
         int id = publicRepository.getMaxID("user_admin","admin_id")+1;
         try {
@@ -63,12 +62,12 @@ public class UserRepository {
         return true;
     }
 
-    public User UserRead(String username){
+    public User userRead(String username){
         String sql=("SELECT * FROM user_amdin WHERE username=?;");
-        return (User)jdbcTemplate.queryForObject(sql, new Object[]{username}, UserRowMapper);
+        return (User)jdbcTemplate.queryForObject(sql, new Object[]{username}, userRowMapper);
     }
 
-    protected RowMapper UserRowMapper = new RowMapper() {
+    protected RowMapper userRowMapper = new RowMapper() {
         @Override
         public Object mapRow(ResultSet resultSet, int rowNum) throws SQLException {
             User user = new User();
