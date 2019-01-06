@@ -14,6 +14,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @EnableAutoConfiguration
 @RestController
 @RequestMapping
+@CrossOrigin
 public class MainController {
 
     @Autowired
@@ -23,10 +24,10 @@ public class MainController {
     private HttpServletRequest request;
 
 
-    @RequestMapping(value = "/login",method = GET)
-    public ModelAndView login(){
-        return new ModelAndView("login");
-    }
+//    @RequestMapping(value = "/login",method = GET)
+//    public ModelAndView login(){
+//        return new ModelAndView("login");
+//    }
 
     @RequestMapping(value = "/login",method = POST)
     @ResponseBody

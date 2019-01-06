@@ -1,5 +1,6 @@
 package com.heiyu.blog.domain;
 
 public class Passage {
-    String
+
+    private String text;
 }
