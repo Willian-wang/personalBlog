@@ -17,7 +17,6 @@ router.get('/resign',function (req,res,next) {
     res.sendFile(process.cwd() +'/public/resign.html');
      });
 
-router.get()
 module.exports = router;
 
 
