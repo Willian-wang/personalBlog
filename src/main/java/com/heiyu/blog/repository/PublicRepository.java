@@ -10,6 +10,8 @@ public class PublicRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+
+
     public int getMaxID(String tableName,String idName) {
         int id;
         try{
