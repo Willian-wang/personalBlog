@@ -25,10 +25,11 @@ public class PassageRepository {
     @Autowired
     private PublicRepository publicRepository;
 
-    public boolean writePassageInf(Passage passage){
-        String sql="INSERT INTO article_inf VALUES (?,?,?,?,?,?,?)";
+    public boolean writePassage(Passage passage){
+        String sql1="INSERT INTO article_inf VALUES (?,?,?,?,?,?,?)";
+        String sql2="INSERT INTO article_text VALUES (?,?)";
         try {
-        jdbcTemplate.update(sql,new Object[]{
+        jdbcTemplate.update(sql1,new Object[]{
                 passage.getId(),
                 passage.getTitle(),
                 passage.getAuthor(),
@@ -41,15 +42,10 @@ public class PassageRepository {
             System.out.println(e);
             return false;
         }
-        return true;
-    }
-
-    public boolean writePassageText(Passage passage){
-        String sql = "INSERT INTO article_text VALUES (?,?)";
         try {
-            jdbcTemplate.update(sql,new Object[]{
-                passage.getId(),
-                passage.getText()
+            jdbcTemplate.update(sql2,new Object[]{
+                    passage.getId(),
+                    passage.getText()
             });}
         catch (Exception e){
             System.out.println(e);
@@ -106,10 +102,20 @@ public class PassageRepository {
     }
 
     public boolean updatePassage(Passage passage){
-        String sql="UPDATE article_inf SET ";
+        String sql1="UPDATE article_inf SET article_title=?,article_author=?,node_id=?,art_gmt_update=? WHERE article_id=?";
+        String sql2="UPDATE article_content SET article_title=? , article_text=? WHERE article_id=?";
         try{
-            jdbcTemplate.update(sql,new Object[]{
-
+            jdbcTemplate.update(sql1,new Object[]{
+                    passage.getTitle(),
+                    passage.getAuthor(),
+                    passage.getNodeId(),
+                    passage.getUpdateTime(),
+                    passage.getId(),
+            });
+            jdbcTemplate.update(sql2,new Object[]{
+                    passage.getTitle(),
+                    passage.getText(),
+                    passage.getId()
             });
         }catch (Exception e){
             System.out.println(e);

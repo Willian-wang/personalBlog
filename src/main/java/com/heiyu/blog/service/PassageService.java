@@ -24,17 +24,21 @@ public class PassageService {
 
     @Autowired
     private PublicRepository publicRepository;
+
+    @Autowired
+    private Passage passage;
+
+    Date date = new Date();
     
-    public Boolean wirtePassage(Passage passage) {
-        Date date = new Date();
+    public Boolean wirtePassage() {
+
         passage.setCreatTime(date);
         passage.setRemove(false);
         passage.setUpdateTime(date);
         passage.setId(publicRepository.getMaxID("article_inf","article_id"));
-        if(passageRepository.writePassageInf(passage)
-                && passageRepository.writePassageText(passage)){
+        if(passageRepository.writePassage(passage)){
             return true;
-        }else {
+        }else{
             return false;
         }
     }
