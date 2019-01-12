@@ -7,6 +7,11 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 import com.heiyu.blog.config.*;
 
 import javax.websocket.server.ServerApplicationConfig;
+/**
+ * @author Jayfeather
+ * @version 1.0.0
+ * @date 2018/01/12
+ */
 
 
 public class AppInitializer{{// extends AbstractAnnotationConfigDispatcherServletInitializer {

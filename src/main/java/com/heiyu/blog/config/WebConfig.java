@@ -4,8 +4,13 @@ package com.heiyu.blog.config;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+/**
+ * @author Jayfeather
+ * @version 1.0.0
+ * @date 2018/01/12
+ */
+
 
 @EnableAutoConfiguration
 @EnableWebMvc

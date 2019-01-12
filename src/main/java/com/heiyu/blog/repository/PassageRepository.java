@@ -11,6 +11,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
+/**
+ * @author Jayfeather
+ * @version 1.0.0
+ * @date 2018/12/15
+ */
+
 public class PassageRepository {
 
     @Autowired
@@ -68,11 +74,11 @@ public class PassageRepository {
     }
 
     public Passage readPassageText(String name){
-        String sql_1="SELECT article_title,article_author,node_id,article_gmt_creat,article_gmt_update FROM article_inf WHERE article_title=? AND article_is_remove=0";
-        String sql_2="SELECT article_content FROM article_text WHERE article_title = ?";
+        String sql1="SELECT article_title,article_author,node_id,article_gmt_creat,article_gmt_update FROM article_inf WHERE article_title=? AND article_is_remove=0";
+        String sql2="SELECT article_content FROM article_text WHERE article_title = ?";
         Passage passage;
         try{
-            passage=(Passage)jdbcTemplate.queryForObject(sql_1, new Object[]{name}, new RowMapper() {
+            passage=(Passage)jdbcTemplate.queryForObject(sql1, new Object[]{name}, new RowMapper() {
                 @Override
                 public Object mapRow(ResultSet resultSet, int rowNum) throws SQLException {
                     Passage passage=new Passage();
@@ -90,7 +96,7 @@ public class PassageRepository {
             return null;
         }
         try {
-            passage.setText((String)jdbcTemplate.queryForObject(sql_2, new Object[]{passage.getTitle()},String.class));
+            passage.setText((String)jdbcTemplate.queryForObject(sql2, new Object[]{passage.getTitle()},String.class));
         }catch (Exception e) {
             System.out.println(e);
             System.out.println("第二个SQL写入错误");

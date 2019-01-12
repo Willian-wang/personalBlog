@@ -11,6 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
+
+/**
+ * @author Jayfeather
+ * @version 1.0.0
+ * @date 2018/12/15
+ */
+
+
 @RestController
 public class UserController {
     
@@ -27,8 +35,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/passagelist",method = GET)
-    public String getPassageList(@RequestBody int page,String _class){
-        return  passageService.getPassageList(page,_class);
+    public String getPassageList(@RequestBody int page,String list){
+        return  passageService.getPassageList(page,list);
     }
 
     @RequestMapping(value ="/passage/{id}/text",method = GET )

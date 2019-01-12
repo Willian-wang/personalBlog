@@ -2,6 +2,11 @@ package com.heiyu.blog.domain;
 
 import java.util.Date;
 
+/**
+ * @author Jayfeather
+ * @version 1.0.0
+ * @date 2018/12/15
+ */
 public class Passage {
 
     private int id;

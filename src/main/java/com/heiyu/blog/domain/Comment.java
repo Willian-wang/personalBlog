@@ -2,7 +2,11 @@ package com.heiyu.blog.domain;
 
 import javax.xml.soap.Text;
 import java.util.Date;
-
+/**
+ * @author Jayfeather
+ * @version 1.0.0
+ * @date 2018/12/15
+ */
 public class Comment {
 
     private Guest guest;

@@ -5,6 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+/**
+ * @author Jayfeather
+ * @version 1.0.0
+ * @date 2018/12/01
+ */
 @SpringBootApplication
 public class BlogApplication {
 

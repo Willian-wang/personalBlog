@@ -11,6 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
+/**
+ * @author Jayfeather
+ * @version 1.0.0
+ * @date 2018/12/15
+ */
+
 @EnableAutoConfiguration
 @RestController
 @RequestMapping
@@ -32,8 +38,6 @@ public class MainController {
     @RequestMapping(value = "/login",method = POST)
     @ResponseBody
     public String loginPost(@RequestBody User user) {
-        //System.out.println(user.toString());
-        //System.out.println( request.getHeader("x-forwarded-for"));
 
         user.setLastIp(getIP());
         if (userService.isLoginMatch(user)) {

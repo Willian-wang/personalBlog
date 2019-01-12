@@ -6,6 +6,12 @@ import jdk.nashorn.internal.objects.annotations.Setter;
 import javax.validation.constraints.Email;
 import java.util.Date;
 
+/**
+ * @author Jayfeather
+ * @version 1.0.0
+ * @date 2018/12/15
+ */
+
 public class User  {
 
     private String username;

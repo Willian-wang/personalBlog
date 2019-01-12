@@ -5,6 +5,11 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author Jayfeather
+ * @date 2019/01/12
+ * @version 1.0.0
+ */
 public class TokenInterceptror implements HandlerInterceptor {
 
 

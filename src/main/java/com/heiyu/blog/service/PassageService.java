@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 /**
- * @author:Jayfeater
- * @version:1.0.0
- * @Date:2019/1/7
+ * @author Jayfeater
+ * @version 1.0.0
+ * @date 2019/1/7
  */
 
 @Service
