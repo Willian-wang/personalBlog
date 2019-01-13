@@ -25,12 +25,11 @@ public class PassageService {
     @Autowired
     private PublicRepository publicRepository;
 
-    @Autowired
-    private Passage passage;
+
 
     Date date = new Date();
     
-    public Boolean wirtePassage() {
+    public Boolean wirtePassage(Passage passage) {
 
         passage.setCreatTime(date);
         passage.setRemove(false);
@@ -43,20 +42,20 @@ public class PassageService {
         }
     }
 
-    public String updatePassage(Passage passage){
-
-    }
-
-    public String getPassageList(int page, String aClass) {
-    }
-
-
-    public String getPassage() {
-    }
-
-    public String getComment() {
-    }
-
-    public String postComment(Comment comment) {
-    }
+//    public String updatePassage(Passage passage){
+//
+//    }
+//
+//    public String getPassageList(int page, String aClass) {
+//    }
+//
+//
+//    public String getPassage() {
+//    }
+//
+//    public String getComment() {
+//    }
+//
+//    public String postComment(Comment comment) {
+//    }
 }

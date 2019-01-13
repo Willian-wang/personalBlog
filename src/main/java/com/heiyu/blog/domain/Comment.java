@@ -9,6 +9,8 @@ import java.util.Date;
  */
 public class Comment {
 
+    private int id;
+
     private Guest guest;
 
     private String text;
@@ -22,6 +24,14 @@ public class Comment {
     private Date creatTime;
 
     private boolean isRemove;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Guest getGuest() {
         return guest;

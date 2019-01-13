@@ -53,5 +53,5 @@ public class UserController {
     @RequestMapping(value = "/passage/{id}/comment",method = POST)
     public String postComment(@PathVariable("id") Integer id,@RequestBody Comment comment){
         return passageService.postComment(comment);
-    }
+//    }
 }

@@ -1,10 +1,12 @@
 package com.heiyu.blog.repository;
 
 import com.heiyu.blog.domain.Passage;
+import jdk.nashorn.internal.ir.annotations.Reference;
 import org.hibernate.engine.spi.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.ResultSet;
@@ -17,6 +19,7 @@ import java.sql.SQLException;
  * @date 2018/12/15
  */
 
+@Repository
 public class PassageRepository {
 
     @Autowired
