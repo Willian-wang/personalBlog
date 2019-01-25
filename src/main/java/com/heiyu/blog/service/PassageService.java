@@ -34,7 +34,7 @@ public class PassageService {
         passage.setCreatTime(date);
         passage.setRemove(false);
         passage.setUpdateTime(date);
-        passage.setId(publicRepository.getMaxID("article_inf","article_id"));
+        passage.setId(publicRepository.getMaxID("article_inf","article_id")+1);
         if(passageRepository.writePassage(passage)){
             return true;
         }else{

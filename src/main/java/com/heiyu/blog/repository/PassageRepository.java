@@ -30,7 +30,7 @@ public class PassageRepository {
 
     public boolean writePassage(Passage passage){
         String sql1="INSERT INTO article_inf VALUES (?,?,?,?,?,?,?)";
-        String sql2="INSERT INTO article_text VALUES (?,?)";
+        String sql2="INSERT INTO article_text VALUES (?,?,?)";
         try {
         jdbcTemplate.update(sql1,new Object[]{
                 passage.getId(),
@@ -48,10 +48,12 @@ public class PassageRepository {
         try {
             jdbcTemplate.update(sql2,new Object[]{
                     passage.getId(),
+                    passage.getTitle(),
                     passage.getText()
             });}
         catch (Exception e){
             System.out.println(e);
+            jdbcTemplate.execute("rollback");
             return false;
         }
         return true;
