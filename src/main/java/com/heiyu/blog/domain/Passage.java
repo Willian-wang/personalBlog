@@ -1,5 +1,8 @@
 package com.heiyu.blog.domain;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import java.util.Date;
 
 /**
@@ -83,5 +86,48 @@ public class Passage {
 
     public void setRemove(boolean remove) {
         isRemove = remove;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"id\":")
+                .append(id);
+        sb.append(",\"text\":\"")
+                .append(text).append('\"');
+        sb.append(",\"title\":\"")
+                .append(title).append('\"');
+        sb.append(",\"author\":\"")
+                .append(author).append('\"');
+        sb.append(",\"nodeId\":")
+                .append(nodeId);
+        sb.append(",\"updateTime\":\"")
+                .append(updateTime).append('\"');
+        sb.append(",\"creatTime\":\"")
+                .append(creatTime).append('\"');
+        sb.append(",\"isRemove\":")
+                .append(isRemove);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) {return true;}
+
+        if (o == null || getClass() != o.getClass()) {return false;}
+
+        Passage passage = (Passage) o;
+
+        return new EqualsBuilder()
+                .append(id, passage.id)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .toHashCode();
     }
 }

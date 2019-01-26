@@ -9,8 +9,11 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.constraints.Null;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -40,32 +43,26 @@ public class PassageRepository {
                 passage.getCreatTime(),
                 passage.getUpdateTime(),
                 passage.isRemove()
-        });}
-        catch (Exception e){
-            System.out.println(e);
-            return false;
-        }
-        try {
+        });
             jdbcTemplate.update(sql2,new Object[]{
                     passage.getId(),
                     passage.getTitle(),
                     passage.getText()
-            });}
-        catch (Exception e){
+            });}catch (Exception e){
             System.out.println(e);
-            jdbcTemplate.execute("rollback");
             return false;
         }
+
         return true;
     }
 
     public boolean deletePassage(Passage passage){
-        String sql="UPDATE article_inf SET article_is_remove=?,article_gmt_update=? WHERE article_title=?";
+        String sql="UPDATE article_inf SET article_is_remove=?,article_gmt_update=? WHERE article_id=?";
         try {
             jdbcTemplate.update(sql,new Object[]{
                     passage.isRemove(),
                     passage.getUpdateTime(),
-                    passage.getTitle()
+                    passage.getId()
             });
         }catch (Exception e){
             System.out.println(e);
@@ -89,26 +86,19 @@ public class PassageRepository {
                     passage.setCreatTime(resultSet.getTime("article_gmt_creat"));
                     passage.setUpdateTime(resultSet.getTime("article_gmt_update"));
                     return passage;
-                }
-            });
+                }});
+            passage.setText((String)jdbcTemplate.queryForObject(sql2, new Object[]{passage.getTitle()},String.class));
         }catch (Exception e){
             System.out.println(e);
-            System.out.println("第一个SQL写入错误");
-            return null;
-        }
-        try {
-            passage.setText((String)jdbcTemplate.queryForObject(sql2, new Object[]{passage.getTitle()},String.class));
-        }catch (Exception e) {
-            System.out.println(e);
-            System.out.println("第二个SQL写入错误");
+            System.out.println("SQL写入错误");
             return null;
         }
         return passage;
     }
 
     public boolean updatePassage(Passage passage){
-        String sql1="UPDATE article_inf SET article_title=?,article_author=?,node_id=?,art_gmt_update=? WHERE article_id=?";
-        String sql2="UPDATE article_content SET article_title=? , article_text=? WHERE article_id=?";
+        String sql1="UPDATE article_inf SET article_title=?,article_author=?,node_id=?,article_gmt_update=? WHERE article_id=?";
+        String sql2="UPDATE article_text SET article_title=? , article_content=? WHERE article_id=?";
         try{
             jdbcTemplate.update(sql1,new Object[]{
                     passage.getTitle(),
@@ -127,5 +117,32 @@ public class PassageRepository {
             return false;
         }
         return true;
+    }
+
+    public List<Passage> getPassageList(int page,int pageSize){
+        String sql1="SELECT * FROM article_inf WHERE article_is_remove=0 and article_id >= ? LIMIT ?";
+        String sql2="SELECT * FROM";
+        int firstSelectedId = ( ( page - 1) * pageSize);
+        List<Passage> passages = new ArrayList<>();
+        try{
+            passages=jdbcTemplate.query(sql1,new Object[]{firstSelectedId,pageSize }, new RowMapper() {
+                @Override
+                public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Passage passage = new Passage();
+                    passage.setId(rs.getInt("article_id"));
+                    passage.setTitle(rs.getString("article_title"));
+                    passage.setAuthor(rs.getString("article_author"));
+                    passage.setNodeId(rs.getInt("node_id"));
+                    passage.setCreatTime(rs.getTime("article_gmt_creat"));
+                    passage.setUpdateTime(rs.getTime("article_gmt_update"));
+                    passage.setRemove(rs.getBoolean("article_is_remove"));
+                    return passage;
+                }
+            });
+        }catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+        return passages;
     }
 }
