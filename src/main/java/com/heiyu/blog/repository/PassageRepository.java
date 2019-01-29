@@ -40,8 +40,8 @@ public class PassageRepository {
                 passage.getTitle(),
                 passage.getAuthor(),
                 passage.getNodeId(),
-                passage.getCreatTime(),
                 passage.getUpdateTime(),
+                passage.getCreatTime(),
                 passage.isRemove()
         });
             jdbcTemplate.update(sql2,new Object[]{
@@ -71,26 +71,28 @@ public class PassageRepository {
         return true;
     }
 
-    public Passage readPassageText(String name){
-        String sql1="SELECT article_title,article_author,node_id,article_gmt_creat,article_gmt_update FROM article_inf WHERE article_title=? AND article_is_remove=0";
-        String sql2="SELECT article_content FROM article_text WHERE article_title = ?";
+    public Passage readPassage(int id){
+        String sql1="SELECT article_inf.*,article_text.article_content FROM article_inf " +
+                "INNER JOIN article_text ON article_inf.article_id=article_text.article_id " +
+                " WHERE article_is_remove =0 and article_inf.article_id=?";
         Passage passage;
         try{
-            passage=(Passage)jdbcTemplate.queryForObject(sql1, new Object[]{name}, new RowMapper() {
+            passage=(Passage)jdbcTemplate.queryForObject(sql1, new Object[]{id}, new RowMapper() {
                 @Override
-                public Object mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-                    Passage passage=new Passage();
-                    passage.setId(resultSet.getInt("comment_id"));
-                    passage.setAuthor(resultSet.getString("comment_user_name"));
-                    passage.setNodeId(resultSet.getInt("node_id"));
-                    passage.setCreatTime(resultSet.getTime("article_gmt_creat"));
-                    passage.setUpdateTime(resultSet.getTime("article_gmt_update"));
+                public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    Passage passage = new Passage();
+                    passage.setId(rs.getInt("article_id"));
+                    passage.setTitle(rs.getString("article_title"));
+                    passage.setAuthor(rs.getString("article_author"));
+                    passage.setNodeId(rs.getInt("node_id"));
+                    passage.setCreatTime(rs.getTime("article_gmt_creat"));
+                    passage.setUpdateTime(rs.getTime("article_gmt_update"));
+                    passage.setRemove(rs.getBoolean("article_is_remove"));
+                    passage.setText(rs.getString("article_content"));
                     return passage;
                 }});
-            passage.setText((String)jdbcTemplate.queryForObject(sql2, new Object[]{passage.getTitle()},String.class));
         }catch (Exception e){
             System.out.println(e);
-            System.out.println("SQL写入错误");
             return null;
         }
         return passage;
@@ -119,9 +121,11 @@ public class PassageRepository {
         return true;
     }
 
-    public List<Passage> getPassageList(int page,int pageSize){
-        String sql1="SELECT * FROM article_inf WHERE article_is_remove=0 and article_id >= ? LIMIT ?";
-        String sql2="SELECT * FROM";
+    public List<Passage> readPassageList(int page, int pageSize){
+        String sql1="SELECT article_inf.*,article_text.article_content FROM article_inf " +
+                "INNER JOIN article_text ON article_inf.article_id=article_text.article_id " +
+                " WHERE article_is_remove =0 and article_inf.article_id >= (SELECT article_inf.article_id FROM article_inf WHERE article_is_remove=0 LIMIT ?,1) LIMIT ?";
+        String sql2="and article_inf.article_id >= ? LIMIT ?";
         int firstSelectedId = ( ( page - 1) * pageSize);
         List<Passage> passages = new ArrayList<>();
         try{
@@ -136,6 +140,7 @@ public class PassageRepository {
                     passage.setCreatTime(rs.getTime("article_gmt_creat"));
                     passage.setUpdateTime(rs.getTime("article_gmt_update"));
                     passage.setRemove(rs.getBoolean("article_is_remove"));
+                    passage.setText(rs.getString("article_content"));
                     return passage;
                 }
             });
@@ -145,4 +150,5 @@ public class PassageRepository {
         }
         return passages;
     }
+
 }

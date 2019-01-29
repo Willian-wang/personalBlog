@@ -25,9 +25,9 @@ public class UserService {
         Date date =new Date();
         count = userRepository.loginUserMatch(user.getUsername(), user.getPassword());
         if (count > 0) {
-            user.setUpdatTime(date);
+            user.setUpdateTime(date);
             user.setLastLoginTime(date);
-            userRepository.userUpdate(user);
+            userRepository.updateUser(user);
             return true;
         } else {
             return false;
@@ -38,11 +38,11 @@ public class UserService {
 
     public boolean resignUser (User user){
         Date date =new Date();
-        user.setUpdatTime(date);
+        user.setUpdateTime(date);
         user.setCreatTime(date);
         user.setLastLoginTime(date);
         System.out.println(user);
-        return userRepository.userWrite(user);
+        return userRepository.writeUser(user);
     }
 
 

@@ -53,8 +53,17 @@ public class PassageRepositoryTest {
 
     @Test
     public void getPassageListTest(){
-        String a = passageService.getPassageList(2,2);
-        assertNotEquals(null ,a);
+        String a = passageService.readPassageList(100,2);
+        System.out.println(a);
+        assertEquals("",a);
+        //assertNotEquals(null ,a);
+    }
+
+    @Test
+    public void getPassageTest(){
+        Passage passage = new Passage();
+        String a = passageService.readPassage(10);
+        assertNotEquals(null,a);
     }
 
 }

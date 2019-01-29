@@ -30,4 +30,14 @@ public class PublicRepository {
         return id;
 
     }
+
+    public boolean publicUpdate(String sql, Object object){
+        try{
+            jdbcTemplate.update(sql,object);
+        }catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
 }

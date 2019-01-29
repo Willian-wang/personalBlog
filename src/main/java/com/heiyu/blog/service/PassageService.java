@@ -1,15 +1,11 @@
 package com.heiyu.blog.service;
 
-import com.heiyu.blog.domain.Comment;
 import com.heiyu.blog.domain.Passage;
 import com.heiyu.blog.repository.PassageRepository;
 import com.heiyu.blog.repository.PublicRepository;
-import com.heiyu.blog.repository.UserRepository;
-import org.omg.CORBA.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -37,7 +33,6 @@ public class PassageService {
     Date date = new Date();
     
     public Boolean wirtePassage(Passage passage) {
-
         passage.setCreatTime(date);
         passage.setRemove(false);
         passage.setUpdateTime(date);
@@ -69,9 +64,9 @@ public class PassageService {
         }
     }
 
-    public String getPassageList(int page, int pageSize) {
+    public String readPassageList(int page, int pageSize) {
         List<Passage> passages ;
-        passages = passageRepository.getPassageList(page,pageSize);
+        passages = passageRepository.readPassageList(page,pageSize);
         Iterator<Passage> iterator = passages.iterator();
         String passageListJson="";
         if(passages != null){
@@ -88,10 +83,16 @@ public class PassageService {
 
 
 
-//    public String getPassage() {
-//    }
+    public String readPassage(int id) {
+        Passage passage=passageRepository.readPassage(id);
+        if(passage!=null){
+            return passage.toString();
+        }else {
+            return null;
+        }
+    }
 //
-//    public String getComment() {
+//    public String readComment() {
 //    }
 //
 //    public String postComment(Comment comment) {

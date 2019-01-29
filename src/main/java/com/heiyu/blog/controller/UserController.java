@@ -36,8 +36,8 @@ public class UserController {
 //    }
 //
 //    @RequestMapping(value = "/passagelist",method = GET)
-//    public String getPassageList(@RequestBody int page,String list){
-//        return  passageService.getPassageList(page,list);
+//    public String readPassageList(@RequestBody int page,String list){
+//        return  passageService.readPassageList(page,list);
 //    }
 //
 //    @RequestMapping(value ="/passage/{id}/text",method = GET )
@@ -46,8 +46,8 @@ public class UserController {
 //    }
 //
 //    @RequestMapping(value ="/passage/{id}/comment",method = GET)
-//    public String getComment(@PathVariable("id") Integer id){
-//        return passageService.getComment();
+//    public String readComment(@PathVariable("id") Integer id){
+//        return passageService.readComment();
 //    }
 //
 //    @RequestMapping(value = "/passage/{id}/comment",method = POST)

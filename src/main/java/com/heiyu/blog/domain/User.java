@@ -14,6 +14,7 @@ import java.util.Date;
 
 public class User  {
 
+    private int id;
     private String username;
     private String password;
     private String email;
@@ -21,7 +22,26 @@ public class User  {
     private String lastIp;
     private Date lastLoginTime;
     private Date creatTime;
-    private Date updatTime;
+    private Date updateTime;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isRemove() {
+        return isRemove;
+    }
+
+    public void setRemove(boolean remove) {
+        isRemove = remove;
+    }
+
+    private boolean isRemove;
 
     public String getUsername() {
         return username;
@@ -80,12 +100,12 @@ public class User  {
         this.creatTime = creatTime;
     }
 
-    public Date getUpdatTime() {
-        return updatTime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatTime(Date updatTime) {
-        this.updatTime = updatTime;
+    public void setUpdateTime(Date updatTime) {
+        this.updateTime = updatTime;
     }
 
     public User(){}
@@ -100,7 +120,7 @@ public class User  {
                 ", lastIp='" + lastIp + '\'' +
                 ", lastLoginTime=" + lastLoginTime +
                 ", creatTime=" + creatTime +
-                ", updatTime=" + updatTime +
+                ", updatTime=" + updateTime +
                 '}';
     }
 

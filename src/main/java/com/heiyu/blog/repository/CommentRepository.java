@@ -30,13 +30,13 @@ public class CommentRepository {
         try {
             jdbcTemplate.update(sql, new Object[]{
                     comment.getId(),
-                    comment.getGuest().getName(),
-                    comment.getCreatTime(),
-                    comment.getText(),
                     comment.getArticleId(),
                     comment.getReplayId(),
-                    comment.isRemove(),
-                    comment.getUpdateTime()
+                    comment.getGuest().getName(),
+                    comment.getText(),
+                    comment.getUpdateTime(),
+                    comment.getCreatTime(),
+                    comment.isRemove()
             });
         } catch (Exception e) {
             System.out.println(e);
@@ -45,11 +45,11 @@ public class CommentRepository {
         return true;
     }
 
-    public List<Comment> getComment(int passageId) {
-        String sql = "SELECT * FROM article_comment WHERE ";
+    public List<Comment> readComment(int passageId) {
+        String sql = "SELECT * FROM article_comment WHERE comment_article_id=? AND comment_is_remove=0";
         List<Comment> comments = new ArrayList<>();
         try {
-            comments.add((Comment) jdbcTemplate.queryForList(sql, new Object[]{}, new RowMapper() {
+            comments =jdbcTemplate.query(sql, new Object[]{passageId}, new RowMapper() {
                 @Override
                 public Comment mapRow(ResultSet resultSet, int mun) throws SQLException {
                     Comment comment = new Comment();
@@ -65,11 +65,46 @@ public class CommentRepository {
                     comment.setUpdateTime(resultSet.getTime("comment_gmt_update"));
                     return comment;
                 }
-            }));
+            });
         } catch (Exception e) {
             System.out.println(e);
         }
         return comments;
     }
 
+    public boolean deletComment(Comment comment) {
+        String sql = "UPDATE article_comment SET comment_is_remove=1,comment_gmt_update=? WHERE comment_id=?";
+        try {
+            jdbcTemplate.update(sql, new Object[]{
+                    comment.getUpdateTime(),
+                    comment.getId()
+            });
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateComment(Comment comment){
+            String sql="UPDATE  article_comment SET omment_user_name=?" +
+                    ",comment_content=?,comment_article_id=?,comment_reply_id=?" +
+                    ",comment_is_remove=?,comment_gmt_update=?" +
+                    "WHERE comment_id=?";
+            try{
+                jdbcTemplate.update(sql,new Object[]{
+                        comment.getId(),
+                        comment.getGuest().getName(),
+                        comment.getText(),
+                        comment.getArticleId(),
+                        comment.getReplayId(),
+                        comment.isRemove(),
+                        comment.getUpdateTime()
+                });
+            }catch(Exception e){
+                System.out.println(e);
+                return false;
+            }
+            return true;
+    }
 }
