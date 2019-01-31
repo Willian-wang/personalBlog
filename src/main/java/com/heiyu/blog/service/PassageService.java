@@ -39,29 +39,18 @@ public class PassageService {
         int id = max(publicRepository.getMaxID("article_inf","article_id"),
                 publicRepository.getMaxID("article_text","article_id"))+1;
         passage.setId(id);
-        if(passageRepository.writePassage(passage)){
-            return true;
-        }else{
-            return false;
-        }
+        return passageRepository.writePassage(passage);
+
     }
     public boolean deletPassageTest(Passage passage) {
         passage.setRemove(true);
         passage.setUpdateTime(new Date());
-        if(passageRepository.deletePassage(passage)){
-            return true;
-        }else {
-            return false;
-        }
+        return passageRepository.deletePassage(passage);
     }
 
     public boolean updatePassage(Passage passage){
         passage.setUpdateTime(new Date());
-        if(passageRepository.updatePassage(passage)){
-            return true;
-        }else{
-            return false;
-        }
+        return passageRepository.updatePassage(passage);
     }
 
     public String readPassageList(int page, int pageSize) {
@@ -91,10 +80,4 @@ public class PassageService {
             return null;
         }
     }
-//
-//    public String readComment() {
-//    }
-//
-//    public String postComment(Comment comment) {
-//    }
 }

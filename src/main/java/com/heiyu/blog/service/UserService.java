@@ -45,5 +45,4 @@ public class UserService {
         return userRepository.writeUser(user);
     }
 
-
 }
