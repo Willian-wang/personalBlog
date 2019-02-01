@@ -78,4 +78,26 @@ public class Guest {
     public void setCreatTime(Date creatTime) {
         this.creatTime = creatTime;
     }
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"id\":")
+                .append(id);
+        sb.append(",\"name\":\"")
+                .append(name).append('\"');
+        sb.append(",\"ip\":\"")
+                .append(ip).append('\"');
+        sb.append(",\"email\":\"")
+                .append(email).append('\"');
+        sb.append(",\"blog\":\"")
+                .append(blog).append('\"');
+        sb.append(",\"updateTime\":\"")
+                .append(updateTime).append('\"');
+        sb.append(",\"creatTime\":\"")
+                .append(creatTime).append('\"');
+        sb.append('}');
+        return sb.toString();
+    }
 }

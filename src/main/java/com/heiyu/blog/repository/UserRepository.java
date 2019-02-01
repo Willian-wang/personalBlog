@@ -34,15 +34,44 @@ public class UserRepository {
         return (int)jdbcTemplate.queryForObject(sql,new Object[]{username,password}, Integer.class);
     }
 
-    public void updateUser(User user){
-        String sql=("UPDATE user_admin SET admin_last_ip=?,admin_last_time=?,admin_gmt_update=? WHERE admin_name=? AND admin_is_remove=0");
+    public void updateUserLoginInf(User user){
+        String sql=("UPDATE user_admin SET  admin_last_ip=?,admin_last_time=?,admin_gmt_update=? WHERE admin_id=? AND admin_is_remove=0");
             jdbcTemplate.update(sql, new Object[]{
                     user.getLastIp(),
                     user.getLastLoginTime(),
                     user.getUpdateTime(),
                     user.getUsername()
             });
-        }
+    }
+
+    public boolean updateUserInf(User user){
+        String sql="UPDATE user_admin SET admin_email=?,admin_phone_number=?,admin_gmt_update=? WHERE  admin_id=?";
+        try {
+            jdbcTemplate.update(sql,new Object[]{
+                    user.getEmail(),
+                    user.getPhoneNumber(),
+                    user.getUpdateTime(),
+                    user.getId()
+            });
+        }catch (Exception e){
+            System.out.println(e);
+            return false;
+        }return true;
+    }
+
+    public boolean updateUserPassword(User user){
+        String sql="UPDATE user_admin SET admin_password=? ,admin_gmt_update=? WHERE  admin_id=?";
+        try {
+            jdbcTemplate.update(sql,new Object[]{
+                    user.getPassword(),
+                    user.getUpdateTime(),
+                    user.getId()
+            });
+        }catch (Exception e){
+            System.out.println(e);
+            return false;
+        }return true;
+    }
 
     public Boolean writeUser(User user) {
         String sql = ("INSERT INTO user_admin() VALUE(?,?,?,?,?,?,?,?,?,?)");
@@ -66,6 +95,35 @@ public class UserRepository {
         return true;
     }
 
+    public List<User> readUserList(int pageSize ,int pageNum){
+        String sql = "SELECT * FROM user_admin WHERE admin_is_remove=0 AND admin_id<=" +
+                "(SELECT admin_id FROM user_admin LIMIT ?,1) LIMIT ?";
+        int firstSelectId=pageSize*(pageNum-1);
+        List<User> users = new ArrayList<>();
+        try {
+            users = jdbcTemplate.query(sql, new Object[]{firstSelectId,pageNum}, new RowMapper() {
+                @Override
+                public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    User user = new User();
+                    user.setId(rs.getInt("admin_id"));
+                    user.setUsername(rs.getString("admin_name"));
+                    user.setPassword(null);
+                    user.setPhoneNumber(rs.getNString("admin_phone_number"));
+                    user.setEmail(rs.getString("admin_email"));
+                    user.setLastIp(rs.getString("admin_last_ip"));
+                    user.setLastLoginTime(rs.getTime("admin_last_time"));
+                    user.setUpdateTime(rs.getTime("admin_gmt_update"));
+                    user.setCreatTime(rs.getTime("admin_gmt_creat"));
+                    return user;
+                }
+            });
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+        return users;
+    }
+
     public User readUser(String username){
         String sql=("SELECT * FROM user_amdin WHERE username=?;");
         return (User)jdbcTemplate.queryForObject(sql, new Object[]{username}, userRowMapper);
@@ -84,6 +142,18 @@ public class UserRepository {
             return false;
         }
         return true;
+    }
+
+    public int isGuestNameMatch(Guest guest){
+        String sql="SELECT COUNT(guest_name) FROM user_guest WHERE guest_name=?";
+        int count;
+        try {
+            count = jdbcTemplate.queryForObject(sql,new Object[]{guest.getName()},Integer.class);
+        }catch (Exception e){
+            System.out.println(e);
+            return -1;
+        }
+        return count;
     }
 
     public List<Guest> readGuestList(int pageSize,int pageNum) {
