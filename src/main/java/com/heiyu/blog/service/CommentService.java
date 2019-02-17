@@ -4,6 +4,7 @@ import com.heiyu.blog.domain.Comment;
 import com.heiyu.blog.repository.CommentRepository;
 import com.heiyu.blog.repository.PublicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +17,8 @@ import java.util.List;
  * @Date 2019/2/1 0:29
  * @Version 1.0
  **/
+
+@Service
 public class CommentService {
 
     @Autowired

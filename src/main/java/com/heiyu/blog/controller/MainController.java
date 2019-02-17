@@ -38,7 +38,7 @@ public class MainController {
     @RequestMapping(value = "/login",method = POST)
     @ResponseBody
     public String loginPost(@RequestBody User user) {
-
+        System.out.println(user);
         user.setLastIp(getIP());
         if (userService.isLoginMatch(user)) {
             return "{\"login\":1}";

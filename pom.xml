@@ -91,11 +91,11 @@
 			<artifactId>java-jwt</artifactId>
 			<version>3.3.0</version>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+				<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -107,7 +107,10 @@
 				<artifactId>log4j-api</artifactId>
 				<version>2.11.1</version>
 			</dependency>
-
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-starter-security</artifactId>-->
+		<!--</dependency>-->
 	</dependencies>
 
 	<build>

@@ -12,6 +12,7 @@ import java.util.Date;
  * @Date 2019/1/29 22:21
  * @Version 1.0
  **/
+
 public class Node {
 
     private int id;

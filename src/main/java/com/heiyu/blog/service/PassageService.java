@@ -53,9 +53,9 @@ public class PassageService {
         return passageRepository.updatePassage(passage);
     }
 
-    public String readPassageList(int page, int pageSize) {
+    public String readPassageList(int pageNum, int pageSize) {
         List<Passage> passages ;
-        passages = passageRepository.readPassageList(page,pageSize);
+        passages = passageRepository.readPassageList(pageNum,pageSize);
         Iterator<Passage> iterator = passages.iterator();
         String passageListJson="";
         if(passages != null){

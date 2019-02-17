@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import static com.heiyu.blog.controller.StatusCode.SERVERERROW;
+import static com.heiyu.blog.controller.StatusCode.SUCCESS;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 
@@ -33,32 +35,32 @@ public class UserController {
     @RequestMapping(value = "/passage",method = POST)
     public String writePassage(@RequestBody Passage passage){
         if(passageService.wirtePassage(passage)) {
-            return "{\"writePassage\":1}";
+            return SUCCESS;
         }else{
-            return "{\"writePassage\":0}";
+            return SERVERERROW;
         }
     }
 
-    @RequestMapping(value = "/passagelist",method = GET)
-    public String readPassageList(@RequestBody int page,String list){
-        return  passageService.readPassageList();
+    @RequestMapping(value = "/passagelist/{pageNum}/{pageSize}",method = GET)
+    public String readPassageList(@PathVariable("pageNum") int pageNum , @PathVariable("pageSize") int pageSize){
+        return  passageService.readPassageList(pageNum,pageSize);
     }
 
-    @RequestMappieng(value ="/passage/{id}/text",method = GET )
+    @RequestMapping (value = "/passage/{id}/text",method = GET )
     public String getPassage(@PathVariable("id") Integer id){
         return passageService.readPassage(id);
     }
 
-    @RequestMapping(value ="/passage/{id}/comment",method = GET)
-    public String readComment(@PathVariable("id") Integer id){
-        return passageService.readComment(id);
-    }
+//    @RequestMapping(value ="/passage/{id}/comment",method = GET)
+//    public String readComment(@PathVariable("id") Integer id){
+//        return passageService.readComment(id);
+//    }
 
-    @RequestMapping(value = "/passage/{id}/comment",method = POST)
-    public String postComment(@PathVariable("id") Integer id,@RequestBody Comment comment){
-        return passageService.postComment(comment);
-   }
-
-   @RequestMapping(value = "/passage/{}/comment",method = POST)
-    public String
+//    @RequestMapping(value = "/passage/{id}/comment",method = POST)
+//    public String postComment(@PathVariable("id") Integer id,@RequestBody Comment comment){
+//        return passageService.writeComment(comment);
+//   }
+//
+//   @RequestMapping(value = "/passage/{}/comment",method = POST)
+//    public String
 }
