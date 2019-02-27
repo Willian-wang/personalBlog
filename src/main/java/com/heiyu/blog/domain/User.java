@@ -2,6 +2,8 @@ package com.heiyu.blog.domain;
 
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import javax.validation.constraints.Email;
 import java.util.Date;
@@ -126,26 +128,23 @@ public class User  {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
+        if (this == o) {return true;}
 
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (!(o instanceof User)) {return false;}
 
         User user = (User) o;
 
-        return new org.apache.commons.lang.builder.EqualsBuilder()
-                .append(username, user.username)
+        return new EqualsBuilder()
+                .append(getUsername(), user.getUsername())
+                .append(getPassword(), user.getPassword())
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new org.apache.commons.lang.builder.HashCodeBuilder(17, 37)
-                .append(username)
+        return new HashCodeBuilder(17, 37)
+                .append(getUsername())
+                .append(getPassword())
                 .toHashCode();
     }
-
 }

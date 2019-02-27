@@ -7,5 +7,5 @@ package com.heiyu.blog.config;
  */
 
 
-public class RootConfig {
+public class   RootConfig {
 }
