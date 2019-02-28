@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import com.heiyu.blog.repository.PublicRepository;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ import java.util.List;
  *
  * 这个类尝试了一下使用公共update代码，减少了代码量……，但是代码的可读性降低了。
  **/
+@Repository
 public class NodeRepository {
 
     @Autowired
@@ -29,7 +31,7 @@ public class NodeRepository {
     private PublicRepository publicRepository;
 
     public boolean writeNode(Node node) {
-        String sql1 = "INSERT INTO article_node VALUES (?,?,?,?,?,?,?)";
+        String sql1 = "INSERT INTO article_node VALUES (?,?,?,?,?)";
         try {
             jdbcTemplate.update(sql1, new Object[]{
                     node.getId(),
@@ -72,7 +74,7 @@ public class NodeRepository {
 
     public boolean deleteNode(Node node) {
         String sql = "UPDATE article_node SET node_is_remove=?,node_gmt_update=? WHERE node_id=?";
-        Object object = new Object[]{
+        Object[] object = new Object[]{
                 node.isRemove(),
                 node.getUpdateTime(),
                 node.getId()
@@ -82,7 +84,7 @@ public class NodeRepository {
 
     public boolean updateNode(Node node) {
         String sql = "UPDATE article_node SET node_name=?,node_gmt_update=?,node_gmt_creat=?,node_is_remove=? WHERE node_id=?";
-        Object object = new Object[]{
+        Object[] object = new Object[]{
                 node.getName(),
                 node.getUpdateTime(),
                 node.getCreatTime(),

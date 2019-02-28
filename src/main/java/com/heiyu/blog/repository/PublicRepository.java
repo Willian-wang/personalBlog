@@ -31,7 +31,7 @@ public class PublicRepository {
 
     }
 
-    public boolean publicUpdate(String sql, Object object){
+    public boolean publicUpdate(String sql, Object[] object){
         try{
             jdbcTemplate.update(sql,object);
         }catch (Exception e){

@@ -1,14 +1,17 @@
 package com.heiyu.blog.domain;
 
 
+import java.util.Date;
+
 /**
  * @author Jayfeather
  * @version 1.0.0
  * @date 2018/12/15
  */
 public class Log {
+    private int id;
 
-    private User user;
+    private String userName;
 
     private String operate;
 
@@ -16,16 +19,24 @@ public class Log {
 
     private String ip;
 
-    private String gmtCreatTime;
+    private Date gmtCreatTime;
 
-    private String gmtUpdateTime;
+    private Date gmtUpdateTime;
 
-    public User getUser() {
-        return user;
+    public int getId() {
+        return id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getIp() {
@@ -36,19 +47,19 @@ public class Log {
         this.ip = ip;
     }
 
-    public String getGmtCreatTime() {
+    public Date getGmtCreatTime() {
         return gmtCreatTime;
     }
 
-    public void setGmtCreatTime(String gmtCreatTime) {
+    public void setGmtCreatTime(Date gmtCreatTime) {
         this.gmtCreatTime = gmtCreatTime;
     }
 
-    public String getGmtUpdateTime() {
+    public Date getGmtUpdateTime() {
         return gmtUpdateTime;
     }
 
-    public void setGmtUpdateTime(String gmtUpdateTime) {
+    public void setGmtUpdateTime(Date gmtUpdateTime) {
         this.gmtUpdateTime = gmtUpdateTime;
     }
 

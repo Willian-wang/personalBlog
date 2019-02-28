@@ -4,7 +4,9 @@ import com.heiyu.blog.domain.Node;
 import com.heiyu.blog.service.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +20,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
  * @Date 2019/2/1 23:43
  * @Version 1.0
  **/
+
+@RestController
 public class NodeController{
 
     @Autowired
@@ -37,10 +41,8 @@ public class NodeController{
         }
     }
 
-    @RequestMapping(value = "/node/{id}" , method = POST)
-    public String writeNode(@PathVariable("id") int id){
-        Node node = new Node();
-        node.setId(id);
+    @RequestMapping(value = "/admin/node" , method = POST)
+    public String writeNode(@RequestBody Node node){
         boolean isSuccess = nodeService.nodeWrite(node);
         if(isSuccess){
             return SUCCESS;
@@ -49,7 +51,7 @@ public class NodeController{
         }
     }
 
-    @RequestMapping(value = "/node/{id}",method = DELETE)
+    @RequestMapping(value = "admin/node/{id}",method = DELETE)
     public String deletNode(@PathVariable("id") int id){
         Node node = new Node();
         node.setId(id);
@@ -61,7 +63,7 @@ public class NodeController{
         }
     }
 
-    @RequestMapping(value = "/node/{id}",method = PUT)
+    @RequestMapping(value = "/admin/node/{id}",method = PUT)
     public String UpdateNode(@PathVariable("id") int id){
         Node node = new Node();
         node.setId(id);

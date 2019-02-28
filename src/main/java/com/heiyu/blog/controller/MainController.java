@@ -41,6 +41,7 @@ public class MainController {
         System.out.println(user);
         user.setLastIp(getIP());
         if (userService.isLoginMatch(user)) {
+            request.getSession().setAttribute("user",user);
             return "{\"login\":1}";
         } else {
             return "{\"login\":0}";
@@ -56,6 +57,7 @@ public class MainController {
         user.setLastIp(getIP());
 
         if (userService.resignUser(user)) {
+            request.getSession().setAttribute("user",user);
             return "{\"login\":1}";
         } else {
             return "{\"login\":0}";
