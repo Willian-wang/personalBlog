@@ -35,7 +35,7 @@ public class UserRepository {
     }
 
     public void updateUserLoginInf(User user){
-        String sql=("UPDATE user_admin SET  admin_last_ip=?,admin_last_time=?,admin_gmt_update=? WHERE admin_id=? AND admin_is_remove=0");
+        String sql=("UPDATE user_admin SET  admin_last_ip=?,admin_last_time=?,admin_gmt_update=? WHERE admin_name=? AND admin_is_remove=0");
             jdbcTemplate.update(sql, new Object[]{
                     user.getLastIp(),
                     user.getLastLoginTime(),
@@ -74,7 +74,7 @@ public class UserRepository {
     }
 
     public Boolean writeUser(User user) {
-        String sql = ("INSERT INTO user_admin() VALUE(?,?,?,?,?,?,?,?,?,?)");
+        String sql = ("INSERT INTO user_admin VALUE(?,?,?,?,?,?,?,?,?,?)");
         try {
             jdbcTemplate.update(sql, new Object[]{
                     user.getId(),
@@ -124,9 +124,9 @@ public class UserRepository {
         return users;
     }
 
-    public User readUser(String username){
-        String sql=("SELECT * FROM user_amdin WHERE username=?;");
-        return (User)jdbcTemplate.queryForObject(sql, new Object[]{username}, userRowMapper);
+    public User readUser(User user){
+        String sql=("SELECT * FROM user_admin WHERE admin_name=? AND admin_is_remove = 0;");
+        return (User)jdbcTemplate.queryForObject(sql, new Object[]{user.getUsername()}, userRowMapper);
     }
 
     public boolean deleteUser(User user){
@@ -205,9 +205,11 @@ public class UserRepository {
         @Override
         public Object mapRow(ResultSet resultSet, int rowNum) throws SQLException {
             User user = new User();
+            user.setId(resultSet.getInt("admin_id"));
+            user.setUsername(resultSet.getString("admin_name"));
             user.setEmail(resultSet.getString("admin_email"));
             user.setLastIp(resultSet.getString("admin_last_ip"));
-            user.setLastLoginTime(resultSet.getTime("admin_last_time"));
+            user.setLastLoginTime(resultSet.getTimestamp("admin_last_time"));
             user.setPhoneNumber(resultSet.getString("admin_phone_number"));
             return user;
         }

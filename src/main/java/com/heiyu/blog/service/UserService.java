@@ -46,6 +46,7 @@ public class UserService {
         user.setUpdateTime(date);
         user.setCreatTime(date);
         user.setLastLoginTime(date);
+        user.setId(publicRepository.getMaxID("user_admin","admin_id")+1);
         System.out.println(user);
         return userRepository.writeUser(user);
     }
@@ -58,6 +59,12 @@ public class UserService {
     public boolean updateUserPassword(User user){
         user.setUpdateTime(new Date());
         return updateUserPassword(user);
+    }
+
+    public User readUser(User user){
+        user = userRepository.readUser(user);
+        user.setPassword(null);
+        return user;
     }
 
     public String readUserList(int pageNum,int pageSize){

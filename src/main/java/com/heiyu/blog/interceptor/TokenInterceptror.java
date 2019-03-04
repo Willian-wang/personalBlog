@@ -27,7 +27,7 @@ public class TokenInterceptror implements HandlerInterceptor {
         if(user != null && userService.isLoginMatch(user)){
             return true;}
         else {
-            response.setStatus(500);
+            response.setStatus(403);
             return false;}
     }
     @Override

@@ -114,16 +114,23 @@ public class User  {
 
     @Override
     public String toString() {
-        return "User{" +
-                "userName='"+username+'\''+
-                ", password='"+password+'\''+
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", lastIp='" + lastIp + '\'' +
-                ", lastLoginTime=" + lastLoginTime +
-                ", creatTime=" + creatTime +
-                ", updatTime=" + updateTime +
-                '}';
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"id\":")
+                .append(id);
+        sb.append(",\"username\":\"")
+                .append(username).append('\"');
+        sb.append(",\"password\":\"")
+                .append(password).append('\"');
+        sb.append(",\"email\":\"")
+                .append(email).append('\"');
+        sb.append(",\"phoneNumber\":\"")
+                .append(phoneNumber).append('\"');
+        sb.append(",\"lastIp\":\"")
+                .append(lastIp).append('\"');
+        sb.append(",\"lastLoginTime\":\"")
+                .append(lastLoginTime).append('\"');
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override

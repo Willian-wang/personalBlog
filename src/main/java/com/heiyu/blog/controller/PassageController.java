@@ -8,4 +8,7 @@ package com.heiyu.blog.controller;
  * @Version 1.0
  **/
 public class PassageController{
+
+
+
 }
