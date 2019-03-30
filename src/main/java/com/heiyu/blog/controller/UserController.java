@@ -1,19 +1,10 @@
 package com.heiyu.blog.controller;
 
 
-import com.heiyu.blog.domain.Comment;
-import com.heiyu.blog.domain.Passage;
 import com.heiyu.blog.service.CommentService;
 import com.heiyu.blog.service.PassageService;
-import com.heiyu.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import static com.heiyu.blog.controller.StatusCode.SERVERERROW;
-import static com.heiyu.blog.controller.StatusCode.SUCCESS;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 
 /**
@@ -32,24 +23,7 @@ public class UserController {
     @Autowired
     private CommentService commentService;
 
-    @RequestMapping(value = "/passage",method = POST)
-    public String writePassage(@RequestBody Passage passage){
-        if(passageService.wirtePassage(passage)) {
-            return SUCCESS;
-        }else{
-            return SERVERERROW;
-        }
-    }
 
-    @RequestMapping(value = "/passagelist/{pageNum}/{pageSize}",method = GET)
-    public String readPassageList(@PathVariable("pageNum") int pageNum , @PathVariable("pageSize") int pageSize){
-        return  passageService.readPassageList(pageNum,pageSize);
-    }
-
-    @RequestMapping (value = "/passage/{id}/text",method = GET )
-    public String getPassage(@PathVariable("id") Integer id){
-        return passageService.readPassage(id);
-    }
 
 //    @RequestMapping(value ="/passage/{id}/comment",method = GET)
 //    public String readComment(@PathVariable("id") Integer id){

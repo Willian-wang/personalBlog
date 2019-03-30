@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import static com.heiyu.blog.controller.PublicController.*;
 import static org.springframework.web.client.HttpClientErrorException.*;
 
 import org.springframework.web.client.HttpClientErrorException;
@@ -27,7 +29,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RestController
 @RequestMapping
 @CrossOrigin
-public class MainController {
+public class MainController{
 
     @Autowired
     private UserService userService;
@@ -38,8 +40,7 @@ public class MainController {
     @Autowired
     private HttpServletResponse response;
 
-    private static String SUCCESS = "{\"login\":1}";
-    private static String FAILED  = "{\"login\":0}";
+
 
 
 //    @RequestMapping(value = "/login",method = GET)
@@ -54,9 +55,9 @@ public class MainController {
         user.setLastIp(getIP());
         if (userService.isLoginMatch(user)) {
             request.getSession().setAttribute("user",user);
-            return SUCCESS;
+            return LOGINSUCCESS;
         } else {
-            return "{\"login\":0}";
+            return LOGINFAILED;
         }
     }
 
@@ -107,7 +108,7 @@ public class MainController {
         if(user.getUsername().equals(userInSession.getUsername())){
             return true;
         }else {
-            response.setStatus(403);
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return  false;
         }
     }

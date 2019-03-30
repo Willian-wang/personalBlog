@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.heiyu.blog.controller.StatusCode.*;
+import static com.heiyu.blog.controller.PublicController.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 /**
@@ -28,7 +29,7 @@ public class NodeController{
     private NodeService nodeService;
 
     @RequestMapping(value = "/node/{pageNum}/{pageSize}",method = GET)
-    public String readNode(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize , HttpServletResponse httpServletResponse){
+    public String readNode(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize , HttpServletResponse httpServletResponse,HttpServletRequest request ){
         String json = nodeService.noderead(pageSize,pageNum);
         if(json ==null){
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -51,7 +52,7 @@ public class NodeController{
         }
     }
 
-    @RequestMapping(value = "admin/node/{id}",method = DELETE)
+    @RequestMapping(value = "/admin/node/{id}",method = DELETE)
     public String deletNode(@PathVariable("id") int id){
         Node node = new Node();
         node.setId(id);
