@@ -2,6 +2,7 @@ package com.heiyu.blog.controller;
 
 import com.heiyu.blog.domain.Passage;
 import com.heiyu.blog.service.PassageService;
+import com.sun.org.apache.bcel.internal.generic.PUSH;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,9 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.heiyu.blog.controller.PublicController;
 
 import static com.heiyu.blog.controller.PublicController.*;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 
 /**
@@ -31,8 +30,8 @@ public class PassageController {
     @Autowired
     PassageService passageService;
 
-    @RequestMapping(value = "/admin/passage/{id}",method = POST)
-    public String writePassage(@PathVariable("id") int id, @RequestBody Passage passage, HttpServletResponse response){
+    @RequestMapping(value = "/admin/passage/",method = POST)
+    public String writePassage(@RequestBody Passage passage, HttpServletResponse response){
         Boolean flag =  passageService.wirtePassage(passage);
         setStatuCode(flag,response);
         return null;
@@ -51,6 +50,20 @@ public class PassageController {
         String json =  passageService.readPassageList(pageNum,pageSize);
         setStatuCode(json,response);
         return json;
+    }
+
+    @RequestMapping(value = "/admin/passage/{id}",method = DELETE)
+    public String deletPassage(@PathVariable("id") int id,HttpServletResponse response){
+        boolean flag = passageService.deletPassageTest(new Passage(id));
+        setStatuCode(flag,response);
+        return null;
+    }
+
+    @RequestMapping(value = "/admin/passage/{id}",method = PUT)
+    public String updatePassage(@PathVariable("id") int id,@RequestBody Passage passage , HttpServletResponse response){
+        boolean flag = passageService.updatePassage(passage);
+        setStatuCode(flag,response);
+        return null;
     }
 
 

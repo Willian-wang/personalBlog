@@ -112,6 +112,10 @@ public class User  {
 
     public User(){}
 
+    public User(int id){
+        setId(id);
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("{");

@@ -28,6 +28,12 @@ public class NodeController{
     @Autowired
     private NodeService nodeService;
 
+    @Autowired
+    private HttpServletResponse response;
+
+    @Autowired
+    private HttpServletRequest request;
+
     @RequestMapping(value = "/node/{pageNum}/{pageSize}",method = GET)
     public String readNode(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize , HttpServletResponse httpServletResponse,HttpServletRequest request ){
         String json = nodeService.noderead(pageSize,pageNum);
@@ -45,34 +51,23 @@ public class NodeController{
     @RequestMapping(value = "/admin/node" , method = POST)
     public String writeNode(@RequestBody Node node){
         boolean isSuccess = nodeService.nodeWrite(node);
-        if(isSuccess){
-            return SUCCESS;
-        }else {
-            return SERVERERROW;
-        }
+        setStatuCode(isSuccess,response);
+        return null;
     }
 
     @RequestMapping(value = "/admin/node/{id}",method = DELETE)
     public String deletNode(@PathVariable("id") int id){
-        Node node = new Node();
-        node.setId(id);
+        Node node = new Node(id);
         boolean isSuccess = nodeService.nodeDelete(node);
-        if(isSuccess){
-            return SUCCESS;
-        }else {
-            return SERVERERROW;
-        }
+        setStatuCode(isSuccess,response);
+        return null;
     }
 
     @RequestMapping(value = "/admin/node/{id}",method = PUT)
     public String UpdateNode(@PathVariable("id") int id){
-        Node node = new Node();
-        node.setId(id);
+        Node node = new Node(id);
         boolean isSuccess = nodeService.nodeUpdate(node);
-        if(isSuccess){
-            return SUCCESS;
-        }else {
-            return SERVERERROW;
-        }
+        setStatuCode(isSuccess,response);
+        return null;
     }
 }

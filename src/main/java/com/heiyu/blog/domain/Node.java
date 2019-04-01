@@ -21,6 +21,12 @@ public class Node {
     private Date creatTime;
     private boolean isRemove;
 
+    public Node(int id){
+        setId(id);
+    }
+    public Node(){
+    }
+
     public int getId() {
         return id;
     }

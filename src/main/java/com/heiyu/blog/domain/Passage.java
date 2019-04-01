@@ -21,7 +21,10 @@ public class Passage {
     private Date creatTime;
     private boolean isRemove;
 
-
+    public Passage(int id){
+        setId(id);
+    }
+    public Passage(){}
 
     public int getId() {
         return id;
