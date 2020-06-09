@@ -11,7 +11,7 @@
     "debug": "~2.6.9",
     "editor.md": "^1.5.0",
     "express": "~4.16.0",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "morgan": "~1.9.0",
     "path-to-regexp": "^2.4.0"
   }
